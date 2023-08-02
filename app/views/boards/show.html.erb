@@ -1,0 +1,127 @@
+<div class="row mb-3">
+  <div class="col-md-12 d-flex align-items-center">
+    <h1>
+      <%= @the_board.name %>
+    </h1>
+
+    <div class="ms-auto">
+      <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#newPostModal">
+        Add new post
+      </button>
+    </div>
+  </div>
+</div>
+
+<ul class="nav nav-tabs nav-fill mb-3" id="myTab" role="tablist">
+  <li class="nav-item" role="presentation">
+    <button class="nav-link active" id="active-tab" data-bs-toggle="tab" data-bs-target="#active-tab-pane" type="button" role="tab" aria-controls="active-tab-pane" aria-selected="true">Active posts (<%= @active_posts.count %>)</button>
+  </li>
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" id="expired-tab" data-bs-toggle="tab" data-bs-target="#expired-tab-pane" type="button" role="tab" aria-controls="expired-tab-pane" aria-selected="false">Expired posts (<%= @expired_posts.count %>)</button>
+  </li>
+</ul>
+
+<div class="tab-content" id="myTabContent">
+  <div class="tab-pane fade show active" id="active-tab-pane" role="tabpanel" aria-labelledby="active-tab" tabindex="0">
+    <div class="row" data-masonry='{"percentPosition": true }'>
+      <% @active_posts.each do |a_post| %>
+        <div class="col-md-3 mb-4">
+          <div class="card">
+            <div class="card-header">
+              <h1 class="h6 my-1"><%= a_post.title %></h1>
+
+              <div>
+                Posted on <%= a_post.created_at.strftime("%b %e, %Y") %>
+              </div>
+
+              <div>
+                Expires on <%= a_post.expires_on.strftime("%b %e, %Y") %>
+              </div>
+            </div>
+
+            <div class="card-body">
+              <%= simple_format a_post.body %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  <div class="tab-pane fade" id="expired-tab-pane" role="tabpanel" aria-labelledby="expired-tab" tabindex="0">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="table-responsive">
+          <table class="table table-hover">
+            <tr>
+              <th>Title</th>
+              <th>Body</th>
+              <th>Posted on</th>
+              <th>Expired on</th>
+            </tr>
+
+            <% @expired_posts.each do |a_post| %>
+              <tr>
+                <td><%= a_post.title %></td>
+                <td><%= a_post.body %></td>
+                <td><%= a_post.created_at.strftime("%b %e, %Y") %></td>
+                <td><%= a_post.expires_on.strftime("%b %e, %Y") %></td>
+              </tr>
+            <% end %>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="newPostModal" tabindex="-1" aria-labelledby="newPostModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="newPostModalLabel">New post</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="/insert_post" method="post">
+          <div class="mb-3">
+            <label for="title_box" class="form-label">
+              Title
+            </label>
+
+            <input type="text" id="title_box" name="query_title" class="form-control">
+          </div>
+
+          <div class="mb-3">
+            <label for="body_box" class="form-label">
+              Body
+            </label>
+
+            <textarea id="body_box" name="query_body" rows="3" class="form-control"></textarea>
+          </div>
+
+          <div class="mb-3">
+            <label for="expires_on_box" class="form-label">
+              Expires on
+            </label>
+
+            <input type="date" id="expires_on_box" name="query_expires_on" class="form-control">
+          </div>
+
+          <input type="hidden" id="board_id_box" name="query_board_id" value="<%= @the_board.id %>">
+
+          <div class="d-grid">
+            <button class="btn btn-primary">
+              Add post
+            </button>
+          </div>
+
+        </form>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>

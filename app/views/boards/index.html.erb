@@ -1,0 +1,58 @@
+<div class="row">
+  <div class="offset-md-3 col-md-6">
+    <div class="card">
+      <div class="card-header d-flex align-items-center">
+        <h1 class="h6">All boards</h1>
+
+        <!-- Button trigger modal -->
+        <button type="button" class="ms-auto btn btn-sm btn-outline-success" data-bs-toggle="modal" data-bs-target="#newBoardModal">
+          Add a new board
+        </button>
+      </div>
+
+      <div class="list-group list-group-flush">
+        <% @list_of_boards.each do |a_board| %>
+          <a href="/boards/<%= a_board.id %>" class="d-flex list-group-item list-group-item-action">
+            <%= a_board.name %>
+
+            <div class="ms-auto">
+              <i class="fa-solid fa-chevron-right"></i>
+            </div>
+          </a>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="newBoardModal" tabindex="-1" aria-labelledby="newBoardModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="newBoardModalLabel">New board</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="/insert_board" method="post">
+          <div class="mb-3">
+            <label for="name_box" class="form-label">
+              Name
+            </label>
+
+            <input type="text" id="name_box" name="query_name" class="form-control">
+          </div>
+
+          <div class="d-grid">
+            <button class="btn btn-success">
+              Add board
+            </button>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
