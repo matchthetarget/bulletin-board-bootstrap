@@ -70,18 +70,24 @@
 
 <hr>
 
-<%= @matching_posts %>
-
-<div class="row">
+<div class="row" data-masonry='{"percentPosition": true }'>
   <% @matching_posts.each do |a_post| %>
-    <div class="col-md-3">
+    <div class="col-md-3 mb-4">
       <div class="card">
         <div class="card-header">
           <h1 class="h6 my-1"><%= a_post.title %></h1>
+
+          <div>
+            Posted on <%= a_post.created_at.strftime("%b %e, %Y") %>
+          </div>
+
+          <div>
+            Expires on <%= a_post.expires_on.strftime("%b %e, %Y") %>
+          </div>
         </div>
 
         <div class="card-body">
-          <%= a_post.body %>
+          <%= simple_format a_post.body %>
         </div>
       </div>
     </div>

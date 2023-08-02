@@ -2,13 +2,13 @@
 #
 # Table name: posts
 #
-#  id             :integer          not null, primary key
-#  body           :text
-#  title          :string
-#  valid_for_days :integer
-#  created_at     :datetime         not null
-#  updated_at     :datetime         not null
-#  board_id       :integer
+#  id         :integer          not null, primary key
+#  body       :text
+#  expires_on :date
+#  title      :string
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#  board_id   :integer
 #
 class Post < ApplicationRecord
 end

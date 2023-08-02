@@ -16,6 +16,8 @@ class BoardsController < ApplicationController
 
     @matching_posts = Post.where({ :board_id => @the_board.id })
 
+    @expired_posts = Post.where({ })
+
     render({ :template => "boards/show" })
   end
 

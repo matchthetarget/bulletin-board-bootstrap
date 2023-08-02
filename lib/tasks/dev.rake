@@ -14,7 +14,9 @@ task({ :sample_data => :environment }) do
       post = Post.new
       post.board_id = board.id
       post.title = rand < 0.5 ? Faker::Commerce.product_name : Faker::Job.title
-      post.body = Faker::Lorem.paragraphs(number: rand(1..5), supplemental: true)
+      post.body = Faker::Lorem.paragraphs(number: rand(1..5), supplemental: true).join("\n\n")
+      post.created_at = Faker::Date.backward(days: 120)
+      post.expires_on = post.created_at + rand(3..90).days
       post.save
     end
   end

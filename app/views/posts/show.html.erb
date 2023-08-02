@@ -37,7 +37,7 @@
         Valid for days
       </dt>
       <dd>
-        <%= @the_post.valid_for_days %>
+        <%= @the_post.expires_on %>
       </dd>
 
       <dt>
@@ -91,11 +91,11 @@
       </div>
 
       <div>
-        <label for="valid_for_days_box">
-          Valid for days
+        <label for="expires_on_box">
+          Expires on
         </label>
 
-        <input type="text" id="valid_for_days_box" name="query_valid_for_days" value="<%= @the_post.valid_for_days %>">
+        <input type="date" id="expires_on_box" name="query_expires_on" value="<%= @the_post.expires_on %>">
       </div>
 
       <div>
