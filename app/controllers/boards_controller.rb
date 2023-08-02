@@ -16,9 +16,9 @@ class BoardsController < ApplicationController
 
     @matching_posts = Post.where({ :board_id => @the_board.id })
 
-    @active_posts = Post.where({ :expires_on => (Time.current...) }).order(:expires_on)
+    @active_posts = @matching_posts.where({ :expires_on => (Time.current...) }).order(:expires_on)
     
-    @expired_posts = Post.where.not({ :expires_on => (Time.current...) }).order({ :expires_on => :desc })
+    @expired_posts = @matching_posts.where.not({ :expires_on => (Time.current...) }).order({ :expires_on => :desc })
 
     render({ :template => "boards/show" })
   end
@@ -29,7 +29,7 @@ class BoardsController < ApplicationController
 
     if the_board.valid?
       the_board.save
-      redirect_to("/boards", { :notice => "Board created successfully." })
+      redirect_to("/boards/#{the_board.id}", { :notice => "Board created successfully." })
     else
       redirect_to("/boards", { :alert => the_board.errors.full_messages.to_sentence })
     end

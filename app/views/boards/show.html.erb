@@ -1,73 +1,16 @@
-<div>
-  <div>
+<div class="row mb-3">
+  <div class="col-md-12 d-flex align-items-center">
     <h1>
-      Board #<%= @the_board.id %> details
+      <%= @the_board.name %>
     </h1>
 
-    <div>
-      <div>
-        <a href="/boards">
-          Go back
-        </a>
-      </div>
-
-      <div>
-        <a href="/delete_board/<%= @the_board.id %>">
-          Delete board
-        </a>
-      </div>
-    </div>
-
-    <dl>
-      <dt>
-        Name
-      </dt>
-      <dd>
-        <%= @the_board.name %>
-      </dd>
-
-      <dt>
-        Created at
-      </dt>
-      <dd>
-        <%= time_ago_in_words(@the_board.created_at) %> ago
-      </dd>
-
-      <dt>
-        Updated at
-      </dt>
-      <dd>
-        <%= time_ago_in_words(@the_board.updated_at) %> ago
-      </dd>
-    </dl>
-  </div>
-</div>
-
-<hr>
-
-<div>
-  <div>
-    <h2>
-      Edit board
-    </h2>
-
-    <form action="/modify_board/<%= @the_board.id %>"  method="post" >
-      <div>
-        <label for="name_box">
-          Name
-        </label>
-
-        <input type="text" id="name_box" name="query_name" value="<%= @the_board.name %>">
-      </div>
-
-      <button>
-        Update board
+    <div class="ms-auto">
+      <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#newPostModal">
+        Add new post
       </button>
-    </form>
+    </div>
   </div>
 </div>
-
-<hr>
 
 <ul class="nav nav-tabs nav-fill mb-3" id="myTab" role="tablist">
   <li class="nav-item" role="presentation">
@@ -115,7 +58,7 @@
               <th>Posted on</th>
               <th>Expired on</th>
             </tr>
-            
+
             <% @expired_posts.each do |a_post| %>
               <tr>
                 <td><%= a_post.title %></td>
@@ -126,6 +69,58 @@
             <% end %>
           </table>
         </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="newPostModal" tabindex="-1" aria-labelledby="newPostModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="newPostModalLabel">New post</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="/insert_post" method="post">
+          <div class="mb-3">
+            <label for="title_box" class="form-label">
+              Title
+            </label>
+
+            <input type="text" id="title_box" name="query_title" class="form-control">
+          </div>
+
+          <div class="mb-3">
+            <label for="body_box" class="form-label">
+              Body
+            </label>
+
+            <textarea id="body_box" name="query_body" rows="3" class="form-control"></textarea>
+          </div>
+
+          <div class="mb-3">
+            <label for="expires_on_box" class="form-label">
+              Expires on
+            </label>
+
+            <input type="date" id="expires_on_box" name="query_expires_on" class="form-control">
+          </div>
+
+          <input type="hidden" id="board_id_box" name="query_board_id" value="<%= @the_board.id %>">
+
+          <div class="d-grid">
+            <button class="btn btn-primary">
+              Add post
+            </button>
+          </div>
+
+        </form>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
       </div>
     </div>
   </div>
