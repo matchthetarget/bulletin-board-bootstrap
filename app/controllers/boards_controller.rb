@@ -16,7 +16,9 @@ class BoardsController < ApplicationController
 
     @matching_posts = Post.where({ :board_id => @the_board.id })
 
-    @expired_posts = Post.where({ })
+    @active_posts = Post.where({ :expires_on => (Time.current...) }).order(:expires_on)
+    
+    @expired_posts = Post.where.not({ :expires_on => (Time.current...) }).order({ :expires_on => :desc })
 
     render({ :template => "boards/show" })
   end
