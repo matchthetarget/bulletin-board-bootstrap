@@ -23,16 +23,12 @@
 
 <div class="tab-content" id="myTabContent">
   <div class="tab-pane fade show active" id="active-tab-pane" role="tabpanel" aria-labelledby="active-tab" tabindex="0">
-    <div class="row" data-masonry='{"percentPosition": true }'>
-      <% @active_posts.each do |a_post| %>
-        <div class="col-md-3 mb-4">
+    <% @active_posts.each_slice(3) do |three_posts| %>
+      <div class="card-group mb-3">
+        <% three_posts.each do |a_post| %>
           <div class="card">
             <div class="card-header">
               <h1 class="h6 my-1"><%= a_post.title %></h1>
-
-              <div>
-                Posted on <%= a_post.created_at.strftime("%b %e, %Y") %>
-              </div>
 
               <div>
                 Expires on <%= a_post.expires_on.strftime("%b %e, %Y") %>
@@ -42,16 +38,21 @@
             <div class="card-body">
               <%= simple_format a_post.body %>
             </div>
+
+            <div class="card-footer">
+              Posted on <%= a_post.created_at.strftime("%b %e, %Y") %>
+            </div>
           </div>
-        </div>
-      <% end %>
-    </div>
+        <% end %>
+      </div>
+    <% end %>
   </div>
+
   <div class="tab-pane fade" id="expired-tab-pane" role="tabpanel" aria-labelledby="expired-tab" tabindex="0">
     <div class="row">
       <div class="col-md-12">
         <div class="table-responsive">
-          <table class="table table-hover">
+          <table class="table table-hover table-striped table-bordered">
             <tr>
               <th>Title</th>
               <th>Body</th>
