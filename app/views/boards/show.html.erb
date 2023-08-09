@@ -23,9 +23,9 @@
 
 <div class="tab-content" id="myTabContent">
   <div class="tab-pane fade show active" id="active-tab-pane" role="tabpanel" aria-labelledby="active-tab" tabindex="0">
-    <% @active_posts.each_slice(3) do |three_posts| %>
-      <div class="card-group mb-3">
-        <% three_posts.each do |a_post| %>
+    <div class="row row-cols-1 row-cols-md-4 g-4">
+      <% @active_posts.each do |a_post| %>
+        <div class="col">
           <div class="card">
             <div class="card-header">
               <h1 class="h6 my-1"><%= a_post.title %></h1>
@@ -43,9 +43,9 @@
               Posted on <%= a_post.created_at.strftime("%b %e, %Y") %>
             </div>
           </div>
-        <% end %>
-      </div>
-    <% end %>
+        </div>
+      <% end %>
+    </div>
   </div>
 
   <div class="tab-pane fade" id="expired-tab-pane" role="tabpanel" aria-labelledby="expired-tab" tabindex="0">
