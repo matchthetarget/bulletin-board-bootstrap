@@ -2,15 +2,15 @@ desc "Fill the database tables with some sample data"
 task({ :sample_data => :environment }) do
   puts "Sample data task running"
 
-  Board.destroy_all
-  Post.destroy_all
-
   if Rails.env.production?
     ActiveRecord::Base.connection.tables.each do |t|
       ActiveRecord::Base.connection.reset_pk_sequence!(t)
     end
   end
   
+  Board.delete_all
+  Post.delete_all
+
   5.times do
     board = Board.new
     board.name = Faker::Address.community
